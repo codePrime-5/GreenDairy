@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingCart, Beef } from 'lucide-react';
+import { Menu, X, Beef, Mail } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 const Navbar = () => {
@@ -39,7 +39,7 @@ const Navbar = () => {
                     <div className="bg-leaf p-2 rounded-xl">
                         <Beef className="text-white w-6 h-6" />
                     </div>
-                    <span className="text-2xl font-bold text-earth tracking-tight">
+                    <span className="text-2xl font-bold text-earth tracking-tight text-white">
                         Green<span className="text-leaf">Dairy</span>
                     </span>
                 </motion.div>
@@ -62,17 +62,6 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="p-2 text-earth/70 hover:text-leaf transition-colors relative"
-                    >
-                        <ShoppingCart className="w-6 h-6" />
-                        <span className="absolute top-0 right-0 bg-leaf text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                            0
-                        </span>
-                    </motion.button>
-
                     <button
                         className="md:hidden p-2"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -83,9 +72,11 @@ const Navbar = () => {
                     <motion.button
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="hidden md:block btn-primary py-2 px-6"
+                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="hidden md:flex items-center gap-2 btn-primary py-2 px-6"
                     >
-                        Order Now
+                        <Mail className="w-5 h-5" />
+                        Contact Us
                     </motion.button>
                 </div>
             </div>
@@ -110,7 +101,16 @@ const Navbar = () => {
                                     {link.name}
                                 </a>
                             ))}
-                            <button className="btn-primary w-full mt-2">Order Now</button>
+                            <button
+                                onClick={() => {
+                                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                                    setIsMobileMenuOpen(false);
+                                }}
+                                className="btn-primary w-full mt-2 flex items-center justify-center gap-2"
+                            >
+                                <Mail className="w-5 h-5" />
+                                Contact Us
+                            </button>
                         </div>
                     </motion.div>
                 )}
