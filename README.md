@@ -73,7 +73,6 @@ GreenDairy/
 │   │   ├── Hero.jsx
 │   │   ├── About.jsx
 │   │   ├── Products.jsx
-│   │   ├── WhyChooseUs.jsx
 │   │   ├── Testimonials.jsx
 │   │   ├── FarmVideo.jsx
 │   │   ├── Contact.jsx
@@ -108,7 +107,7 @@ GreenDairy/
 ## 🎨 Key Components
 
 ### Sections
-- **Hero** - Eye-catching landing section with CTA
+- **Hero** - Eye-catching landing section with CTA Button
 - **About** - Company story and mission
 - **Products** - Showcase dairy products and farm offerings
 - **WhyChooseUs** - Unique value propositions
