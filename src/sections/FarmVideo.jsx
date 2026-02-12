@@ -9,12 +9,9 @@ const FarmVideo = () => {
     const [isMuted, setIsMuted] = useState(true);
     const [hasError, setHasError] = useState(false);
 
-    // Prefer a local file you can drop into `public/hero/farm.mp4` (copy your
-    // Downloads/motion2Fast_...mp4 -> public/hero/farm.mp4). Fallback to public
-    // CORS-friendly examples if the local file is missing.
+    // Use the imported farm video (Vite will handle the correct path in both dev and production)
     const videoSources = [
-        "src/assets/farm.mp4", // Local file (try to use this one)
-
+        farm, // Local file imported at the top
     ];
 
     const [currentSourceIndex, setCurrentSourceIndex] = useState(0);
