@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Info, Pause, Volume2, VolumeX, RefreshCw } from 'lucide-react';
+import farm from '../assets/farm.mp4';
 
 const FarmVideo = () => {
     const videoRef = useRef(null);
@@ -8,11 +9,12 @@ const FarmVideo = () => {
     const [isMuted, setIsMuted] = useState(true);
     const [hasError, setHasError] = useState(false);
 
-    // Multiple high-quality, reliable fallback sources
+    // Prefer a local file you can drop into `public/hero/farm.mp4` (copy your
+    // Downloads/motion2Fast_...mp4 -> public/hero/farm.mp4). Fallback to public
+    // CORS-friendly examples if the local file is missing.
     const videoSources = [
-        "https://assets.mixkit.co/videos/preview/mixkit-cows-in-a-farm-pasture-4441-large.mp4",
-        "https://cdn.pixabay.com/video/2023/11/04/187766-880907106_large.mp4",
-        "https://player.vimeo.com/external/511529124.sd.mp4?s=25d8869c4765798950890f50bb61718507c570b2&profile_id=165&oauth2_token_id=57447761"
+        "src/assets/farm.mp4", // Local file (try to use this one)
+
     ];
 
     const [currentSourceIndex, setCurrentSourceIndex] = useState(0);
@@ -21,8 +23,10 @@ const FarmVideo = () => {
         const video = videoRef.current;
         if (!video) return;
 
-        const handlePlay = () => setIsPlaying(true);
-        const handlePause = () => setIsPlaying(false);
+        let mounted = true;
+
+        const handlePlay = () => mounted && setIsPlaying(true);
+        const handlePause = () => mounted && setIsPlaying(false);
         const handleError = () => {
             console.error("Video failed to load from source:", videoSources[currentSourceIndex]);
             if (currentSourceIndex < videoSources.length - 1) {
@@ -36,17 +40,35 @@ const FarmVideo = () => {
         video.addEventListener('pause', handlePause);
         video.addEventListener('error', handleError);
 
-        // Forced autoplay logic
+        // Prepare the video source then attempt to play.
+        video.preload = 'metadata';
         video.muted = true;
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                console.log("Autoplay blocked. User interaction required.");
-                setIsPlaying(false);
+
+        // Ensure the correct source is loaded into the element (avoids racey remounts)
+        if (video.src !== videoSources[currentSourceIndex]) {
+            try {
+                video.src = videoSources[currentSourceIndex];
+                // load explicitly to make sure the browser knows about the new source
+                video.load();
+            } catch (e) {
+                // keep going; load may throw in some environments
+            }
+        }
+
+        const playAttempt = video.play();
+        if (playAttempt && typeof playAttempt.then === 'function') {
+            playAttempt.then(() => {
+                if (mounted) setIsPlaying(true);
+            }).catch(err => {
+                // Ignore AbortError which occurs when play() is interrupted by a subsequent pause()
+                if (err && err.name === 'AbortError') return;
+                console.log('Autoplay blocked or play failed:', err);
+                if (mounted) setIsPlaying(false);
             });
         }
 
         return () => {
+            mounted = false;
             video.removeEventListener('play', handlePlay);
             video.removeEventListener('pause', handlePause);
             video.removeEventListener('error', handleError);
@@ -130,8 +152,10 @@ const FarmVideo = () => {
                                 muted
                                 playsInline
                                 autoPlay
+                                crossOrigin="anonymous"
                                 poster="https://images.unsplash.com/photo-1543323344-935df603417a?q=80&w=2070&auto=format&fit=crop"
                                 onClick={togglePlay}
+                                onLoadedData={() => setHasError(false)}
                             >
                                 <source src={videoSources[currentSourceIndex]} type="video/mp4" />
                                 Your browser does not support the video tag.
