@@ -175,6 +175,64 @@ VITE_API_BASE_URL=your_api_url
 3. Push to branch (`git push origin feature/amazing-feature`)
 4. Open a Pull Request
 
+### Contribution Types Recognized
+- 🐛 **Bug Fixes** - Fixing issues and improving stability
+- ✨ **Features** - Adding new functionality
+- 📖 **Documentation** - Improving README, docs, and comments
+- 🎨 **Design** - UI/UX improvements and styling
+- ♻️ **Refactoring** - Code improvements and optimization
+- 🧪 **Tests** - Adding or improving test coverage
+
+---
+
+## 👥 Contributors
+
+We appreciate all contributions to GreenDairy! Here are the amazing people who have helped make this project better:
+
+| Contributor | Contributions | GitHub |
+|-------------|--------------|--------|
+| [codePrime-5](https://github.com/codePrime-5) | 🐛 🎨 ✨ 📖 | [@codePrime-5](https://github.com/codePrime-5) |
+| [bpraveen5](https://github.com/bpraveen5) | 🐛 ✨ | [@bpraveen5](https://github.com/bpraveen5) |
+| *Your Name Here* | Add your contributions | [Create a PR](https://github.com/codePrime-5/GreenDairy/pulls) |
+
+### How to Be Listed
+
+Make a contribution and we'll add you! You'll be credited for:
+- **Bug fixes** - Issues you resolved
+- **Features** - New functionality you added
+- **Documentation** - README or code documentation improvements
+- **Translations** - Multi-language support
+- **Accessibility** - A11y improvements
+- **Performance** - Optimization enhancements
+
+### Add Yourself
+
+To add yourself to the contributors list:
+1. Fork the repository
+2. Update the contributors table in `README.md`
+3. Add your contributions and GitHub profile link
+4. Submit a pull request
+
+### Contributors Bot
+
+You can also use the **[all-contributors](https://allcontributors.org/)** bot to automatically manage contributors:
+
+```bash
+npm install --save-dev all-contributors-cli
+```
+
+Add to `package.json`:
+```json
+"all-contributors": {
+  "files": ["README.md"],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": []
+}
+```
+
+Then contributors can comment on PR with: `@all-contributors please add @username for bug, doc`
+
 ---
 
 ## 📄 License
