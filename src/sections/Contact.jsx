@@ -45,7 +45,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <p className="text-white/60 text-sm">Visit Farm</p>
-                                            <p className="text-xl font-bold">123 Dairy Lane, Green Valley</p>
+                                            <p className="text-xl font-bold">Dairy Lane,  New Zealand</p>
                                         </div>
                                     </div>
                                 </div>
